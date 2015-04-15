@@ -65,22 +65,21 @@ public class DataBaseHelper<T>{
             rs = statement.executeQuery(consultation);
             
             while(rs.next()){
-                T nam= (T)(Class.forName(valueClass.getName()).newInstance());
-//                Method[] methods = object.getClass().getDeclaredMethods();
-//                for(int i = 0; i < methods.length; i++){
-//                    if(methods[i].getName().startsWith("set")){
-//                        methods[i].invoke(object, rs.getString(methods[i].getName().substring(3)));
-//                    }
+                T object= (T)Class.forName(valueClass.getName()).newInstance();
+                Method[] methods = object.getClass().getDeclaredMethods();
+                for(int i = 0; i < methods.length; i++){
+                    if(methods[i].getName().startsWith("set")){
+                        methods[i].invoke(object, rs.getString(methods[i].getName().substring(3)));
+                    }
                     
-//                    if(object.getClass().getName().equals("java.lang.String")){
-//                        object = (T)rs.getString(1);
-//                    }
-//                    list.add(object);
+                    if(object.getClass().getName().equals("java.lang.String")){
+                        object = (T)rs.getString(1);
+                    }
+                    list.add(object);
                     
-//                    System.out.println(methods[i].getName());
+                    System.out.println(methods[i].getName());
                     
-//                }
-                System.out.println(rs.getString("titulo"));
+                }
             }
         } catch(ClassNotFoundException e){
             System.out.println("En driver "+e.getMessage());
